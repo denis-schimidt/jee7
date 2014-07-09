@@ -5,21 +5,33 @@
         http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 	<defaultProtocol type="Servlet 3.0" />
 
-	<!-- <container qualifier="wildfly-as-remote"> <configuration> <property 
-		name="managementAddress">127.0.0.1</property> <property name="managementPort">9999</property> 
-		</configuration> </container> -->
-
 	<engine>
 		<property name="deploymentExportPath">target/</property>
 	</engine>
 
-	<container qualifier="wildfly-as-managed" default="true">
+	<container qualifier="wildfly-as-embedded" default="true">
 		<configuration>
-			<!-- jbossHome can be replaced by JBOSS_HOME maven environmentVariable -->
-			<!-- <property name="jbossHome">#{arquillian.serverHome}</property> -->
+			<property name="managementAddress">127.0.0.1</property>
+			<property name="managementPort">9999</property>
+		</configuration>
+	</container>
+
+	<container qualifier="wildfly-as-managed" default="false">
+		<configuration>
 			<property name="outputToConsole">true</property>
 			<property name="javaVmArguments">-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=y -Xmx512m -XX:MaxPermSize=512m</property>
 			<property name="allowConnectingToRunningServer">true</property>
 		</configuration>
 	</container>
+
+	<container qualifier="wildfly-as-remote" default="false">
+		<protocol type="jmx-wildfly">
+			<property name="executionType">REMOTE</property>
+		</protocol>
+		<configuration>
+			<property name="managementAddress">127.0.0.1</property>
+			<property name="managementPort">9999</property>
+		</configuration>
+	</container>
+
 </arquillian>
