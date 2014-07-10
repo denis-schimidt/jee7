@@ -11,3 +11,4 @@ public class MeuBean {
 		System.out.println( string );
 	}
 }
+

@@ -75,15 +75,15 @@
 		</dependency>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-core</artifactId>
-			<version>${hamcrest.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-library</artifactId>
 			<version>${hamcrest.version}</version>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -182,6 +182,7 @@
 	<profiles>
 
 		<profile>
+		
 			<id>wildfly-embedded-arquillian</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -257,6 +258,7 @@
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
 							<systemPropertyVariables>
+								<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
 								<arquillian.launch>wildfly-as-embedded</arquillian.launch>
 							</systemPropertyVariables>
 						</configuration>
@@ -339,6 +341,7 @@
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
 							<systemPropertyVariables>
+								<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
 								<arquillian.launch>wildfly-as-managed</arquillian.launch>
 							</systemPropertyVariables>
 						</configuration>
@@ -399,6 +402,7 @@
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
 							<systemPropertyVariables>
+								<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
 								<arquillian.launch>wildfly-as-remote</arquillian.launch>
 							</systemPropertyVariables>
 						</configuration>
@@ -471,6 +475,104 @@
 						<filtering>true</filtering>
 					</testResource>
 				</testResources>
+
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<systemPropertyVariables>
+								<arquillian.launch>glassfish-as-embedded</arquillian.launch>
+							</systemPropertyVariables>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>glassfish-managed-arquillian</id>
+
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>org.glassfish.jersey</groupId>
+						<artifactId>jersey-bom</artifactId>
+						<version>2.10</version>
+						<type>pom</type>
+						<scope>import</scope>
+					</dependency>
+					<dependency>
+						<groupId>org.glassfish.grizzly</groupId>
+						<artifactId>grizzly-bom</artifactId>
+						<version>2.3.9</version>
+						<type>pom</type>
+						<scope>import</scope>
+					</dependency>
+					<dependency>
+						<groupId>org.glassfish.tyrus</groupId>
+						<artifactId>tyrus-bom</artifactId>
+						<version>1.7</version>
+						<type>pom</type>
+						<scope>import</scope>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+
+			<dependencies>
+				<dependency>
+					<groupId>org.glassfish.main.extras</groupId>
+					<artifactId>glassfish-embedded-all</artifactId>
+					<version>4.0</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.glassfish</groupId>
+					<artifactId>javax.json</artifactId>
+					<version>1.0.4</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.glassfish.tyrus</groupId>
+					<artifactId>tyrus-client</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.glassfish.tyrus</groupId>
+					<artifactId>tyrus-container-grizzly-client</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.glassfish.jersey.core</groupId>
+					<artifactId>jersey-client</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.jboss.arquillian.container</groupId>
+					<artifactId>arquillian-glassfish-managed-3.1</artifactId>
+					<version>1.0.0.CR4</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+			<build>
+				<testResources>
+					<testResource>
+						<directory>src/test/resources</directory>
+						<filtering>true</filtering>
+					</testResource>
+				</testResources>
+
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<systemPropertyVariables>
+								<arquillian.launch>glassfish-as-managed</arquillian.launch>
+							</systemPropertyVariables>
+						</configuration>
+					</plugin>
+				</plugins>
 			</build>
 		</profile>
 
@@ -490,6 +592,13 @@
 						<groupId>org.glassfish.grizzly</groupId>
 						<artifactId>grizzly-bom</artifactId>
 						<version>2.3.9</version>
+						<type>pom</type>
+						<scope>import</scope>
+					</dependency>
+					<dependency>
+						<groupId>org.glassfish.tyrus</groupId>
+						<artifactId>tyrus-bom</artifactId>
+						<version>1.7</version>
 						<type>pom</type>
 						<scope>import</scope>
 					</dependency>
@@ -542,7 +651,20 @@
 						<filtering>true</filtering>
 					</testResource>
 				</testResources>
+
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<systemPropertyVariables>
+								<arquillian.launch>glassfish-as-remote</arquillian.launch>
+							</systemPropertyVariables>
+						</configuration>
+					</plugin>
+				</plugins>
 			</build>
+
 		</profile>
 	</profiles>
 

@@ -28,6 +28,7 @@ public class MeuBeanTest {
 
 	@Test
 	public void testImprimir() {
-		bean.imprimir( "Testando 1234..." );
+		bean.imprimir( "Testando 1455..." );
+		
 	}
 }
