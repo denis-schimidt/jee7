@@ -30,14 +30,12 @@
 		</protocol>
 		<configuration>
 			<property name="managementAddress">127.0.0.1</property>
-			<property name="managementPort">9999</property>
 		</configuration>
 	</container>
 
 	<container qualifier="glassfish-as-embedded" default="false">
 		<configuration>
 			<property name="remoteServerAddress">127.0.0.1</property>
-			<property name="adminPort">9999</property>
 		</configuration>
 	</container>
 
@@ -45,16 +43,15 @@
 		<configuration>
 			<property name="outputToConsole">true</property>
 			<property name="allowConnectingToRunningServer">true</property>
-			<property name="remoteServerAddress">127.0.0.1</property>
-			<property name="javaVmArguments">-Xrunjdwp:transport=dt_socket,address=9009,server=y,suspend=y -Xmx512m -XX:MaxPermSize=512m</property> 
-			<property name="adminPort">9999</property>
+			<property name="debug">true</property>
 		</configuration>
 	</container>
 	
 	<container qualifier="glassfish-as-remote" default="false">
 		<configuration>
-			<property name="remoteServerAddress">127.0.0.1</property>
-			<property name="adminPort">9999</property>
+			<property name="outputToConsole">true</property>
+			<property name="allowConnectingToRunningServer">true</property>
+			<property name="debug">true</property>
 		</configuration>
 	</container>
 </arquillian>
