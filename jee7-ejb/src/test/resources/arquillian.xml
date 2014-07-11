@@ -35,7 +35,7 @@
 
 	<container qualifier="glassfish-as-embedded" default="false">
 		<configuration>
-			<property name="remoteServerAddress">127.0.0.1</property>
+			<property name="outputToConsole">true</property>
 		</configuration>
 	</container>
 
@@ -49,6 +49,7 @@
 	
 	<container qualifier="glassfish-as-remote" default="false">
 		<configuration>
+			<property name="remoteServerAddress">127.0.0.1</property>
 			<property name="outputToConsole">true</property>
 			<property name="allowConnectingToRunningServer">true</property>
 			<property name="debug">true</property>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN" packages="">
+	<appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+
+		<File name="file-error" fileName="logs/app.log" immediateFlush="true">
+			<PatternLayout pattern="%d{dd-MM-yyyy HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</File>
+	</appenders>
+
+	<loggers>
+		<logger  name="error" level="error">
+			<appender-ref ref="file-error" />
+		</logger>
+
+		<logger level="warn">
+			<appender-ref ref="console" />
+		</logger>
+
+		<root>
+			<priority value ="warn" /> 
+			<appender-ref ref="console" />
+		</root>
+	</loggers>
+</configuration>

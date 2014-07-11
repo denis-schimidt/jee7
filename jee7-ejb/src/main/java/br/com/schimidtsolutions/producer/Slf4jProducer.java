@@ -1,15 +1,15 @@
 package br.com.schimidtsolutions.producer;
 
-
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 
-import org.jboss.logmanager.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class LogProducer {
+public class Slf4jProducer {
 
 	@Produces
 	public Logger newIntance( final InjectionPoint injectionPoint ) {
-		return org.jboss.logmanager.Logger.getLogger( injectionPoint.getMember().getDeclaringClass().getName() );
+		return LoggerFactory.getLogger( injectionPoint.getMember().getDeclaringClass().getName() );
 	}
 }

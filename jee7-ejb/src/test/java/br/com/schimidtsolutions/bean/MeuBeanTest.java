@@ -7,7 +7,9 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.Resolvers;
+import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -17,12 +19,18 @@ public class MeuBeanTest {
 	@Inject
 	private MeuBean bean;
 	
-	@Deployment(name = "testEJB")
+	@Deployment
 	public static Archive<?> createDeployment() {
-		final JavaArchive archive = ShrinkWrap.create(JavaArchive.class)
+		
+		final WebArchive archive = ShrinkWrap.create( WebArchive.class )
+				.addAsLibraries( Resolvers.use( MavenResolverSystem.class ).loadPomFromFile( "pom.xml" ).importTestDependencies().resolve().withoutTransitivity().asFile() )	
+				.addAsLibraries( Resolvers.use( MavenResolverSystem.class ).loadPomFromFile( "pom.xml" ).importCompileAndRuntimeDependencies().resolve().withoutTransitivity().asFile() )
 				.addPackages( true, "br.com.schimidtsolutions" )
-				.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-		System.out.println(archive.toString(true));
+				.addAsWebInfResource( "log4j2.xml", "classes/META-INF/log4j2.xml" )
+				.addAsWebInfResource( EmptyAsset.INSTANCE, "classes/META-INF/beans.xml" );
+		
+		System.out.println( archive.toString(true) );
+		
 		return archive;
 	}
 
