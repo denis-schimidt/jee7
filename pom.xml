@@ -22,8 +22,7 @@
 		<org.glassfish.tyrus.version>1.7</org.glassfish.tyrus.version>
 
 		<!-- Slf4j e Log4j2 Settings -->
-		<slf4j.version>1.7.6</slf4j.version>
-		<log4j.version>2.0-rc1</log4j.version>
+		<log4j.version>2.0-rc2</log4j.version>
 
 		<!-- Plugin Settings -->
 		<plugin.enforcer.version>1.3.1</plugin.enforcer.version>
@@ -77,27 +76,14 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version><!--$NO-MVN-MAN-VER$ -->
-		</dependency>
-
-		<!-- Binding for Log4J -->
-		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
 
-		<!-- Log4j API and Core implementation required for binding -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>${log4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
+			<artifactId>log4j-1.2-api</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
 
@@ -229,7 +215,10 @@
 		<profile>
 
 			<id>wildfly-embedded-arquillian</id>
-			<!-- <activation> <activeByDefault>true</activeByDefault> </activation> -->
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
 			<dependencyManagement>
 				<dependencies>
 					<dependency>
@@ -243,6 +232,12 @@
 			</dependencyManagement>
 
 			<dependencies>
+				<dependency>
+					<groupId>org.jboss.logmanager</groupId>
+					<artifactId>jboss-logmanager</artifactId>
+					<version>1.5.2.Final</version>
+					<scope>provided</scope>
+				</dependency>
 
 				<dependency>
 					<groupId>io.undertow</groupId>
@@ -291,6 +286,7 @@
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
 							<systemPropertyVariables>
+								<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
 								<arquillian.launch>wildfly-as-embedded</arquillian.launch>
 							</systemPropertyVariables>
 						</configuration>
@@ -412,6 +408,7 @@
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
 							<systemPropertyVariables>
+								<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
 								<arquillian.launch>wildfly-as-remote</arquillian.launch>
 							</systemPropertyVariables>
 						</configuration>
@@ -463,7 +460,7 @@
 						</exclusion>
 					</exclusions>
 				</dependency>
-				
+
 				<dependency>
 					<groupId>org.glassfish</groupId>
 					<artifactId>javax.json</artifactId>
@@ -517,10 +514,6 @@
 
 		<profile>
 			<id>glassfish-managed-arquillian</id>
-
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 
 			<dependencyManagement>
 				<dependencies>
