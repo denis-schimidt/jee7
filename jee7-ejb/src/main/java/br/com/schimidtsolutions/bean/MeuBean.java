@@ -14,7 +14,7 @@ public class MeuBean {
 	private Logger log;
 
 	public void imprimir( final String string ) {
-		log.warn( string );
+		log.info( string );
 	}
 }
 

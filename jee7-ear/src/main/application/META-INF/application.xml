@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application id="JEE7" version="7"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/application_7.xsd">
+
+	<display-name>jee7-app</display-name>
+	
+	<module>
+		<web>
+			<web-uri>jee7-web.war</web-uri>
+			<context-root>/jee7-web</context-root>
+		</web>
+	</module>
+	<module>
+		<ejb>jee7-ejb.jar</ejb>
+	</module>
+	<library-directory>lib</library-directory>
+</application> 
