@@ -14,7 +14,10 @@ public class MeuBean {
 	private Logger log;
 
 	public void imprimir( final String string ) {
-		log.info( string );
+		
+		if( string != null ) {
+			log.info( string );
+		}
 	}
 }
 
