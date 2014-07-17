@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
-import br.com.schimidtsolutions.tests.SlowTests;
+import br.com.schimidtsolutions.tests.SlowTest;
 
 @RunWith(Arquillian.class)
 public class MeuBeanIT {
@@ -25,7 +25,8 @@ public class MeuBeanIT {
 	public static Archive<?> createDeployment() {
 		final JavaArchive javaArchive = ShrinkWrap.create( JavaArchive.class, "test-ejb-integrado.jar" )
 				.addAsManifestResource( EmptyAsset.INSTANCE, "beans.xml" )
-				.addPackages( true, "br.com.schimidtsolutions" );
+				.addPackages( true, "br.com.schimidtsolutions" )
+				.deleteClasses( MeuBeanUnitTest.class );
 		
 		System.out.println( javaArchive.toString(true) );
 		
@@ -34,7 +35,7 @@ public class MeuBeanIT {
 
 	@Test
 	@InSequence(1)
-	@Category(SlowTests.class)
+	@Category(SlowTest.class)
 	public void testImprimir() {
 		bean.imprimir( "#########################  AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" );
 	}

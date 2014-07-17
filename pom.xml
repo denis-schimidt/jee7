@@ -132,7 +132,7 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 					<skipTests>${skip.maven.unit.tests}</skipTests>
 					<enableAssertions>true</enableAssertions>
-					<groups>br.com.schimidtsolutions.tests.SlowTests</groups>
+					<groups>br.com.schimidtsolutions.tests.SlowTest,br.com.schimidtsolutions.tests.FastTest</groups>
 
 					<!-- Processamento paralelo rodando na mesma VM -->
 					<parallel>methods</parallel>
@@ -155,7 +155,7 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 					<skipTests>${skip.maven.integration.tests}</skipTests>
 					<enableAssertions>true</enableAssertions>
-					<groups>br.com.schimidtsolutions.tests.SlowTests</groups>
+					<groups>br.com.schimidtsolutions.tests.SlowTest</groups>
 
 					<!-- Processamento paralelo rodando na mesma VM -->
 					<parallel>methods</parallel>

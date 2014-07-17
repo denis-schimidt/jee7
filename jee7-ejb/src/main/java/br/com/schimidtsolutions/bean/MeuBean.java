@@ -15,7 +15,7 @@ public class MeuBean {
 
 	public void imprimir( final String string ) {
 		
-		if( string != null ) {
+		if( string != null && !string.trim().isEmpty() ) {
 			log.info( string );
 		}
 	}
