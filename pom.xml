@@ -148,7 +148,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>${maven.plugins.tests}</version>
 				<inherited>true</inherited>
 
 				<configuration>
@@ -156,15 +155,16 @@
 					<skipTests>${skip.maven.integration.tests}</skipTests>
 					<enableAssertions>true</enableAssertions>
 					<groups>br.com.schimidtsolutions.tests.SlowTest</groups>
+					<testFailureIgnore>false</testFailureIgnore>
 
 					<!-- Processamento paralelo rodando na mesma VM -->
-					<parallel>methods</parallel>
-					<threadCount>10</threadCount>
+					<parallel>classes</parallel>
+					<threadCount>2</threadCount>
 					<perCoreThreadCount>true</perCoreThreadCount>
 
-					<!-- Processamento paralelo rodando em VMs diferentes (Projeto Multi-Módulo) 
-						<forkCount>3</forkCount> <reuseForks>true</reuseForks> <argLine>-Xmx1024m 
-						-XX:MaxMetaspaceSize=256m</argLine -->
+					<!-- Processamento paralelo rodando em VMs diferentes (Projeto Multi-Módulo) -->
+					<!-- <forkCount>3</forkCount> <reuseForks>true</reuseForks> <argLine>-Xmx1024m 
+						-XX:MaxMetaspaceSize=512m</argLine> -->
 
 					<includes>
 						<include>**/IT*.java</include>
@@ -180,14 +180,19 @@
 				</configuration>
 				<executions>
 					<execution>
+						<id>failsafe-verify</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+					<execution>
 						<id>failsafe-integration-tests</id>
 						<phase>integration-test</phase>
 						<goals>
 							<goal>integration-test</goal>
 						</goals>
 					</execution>
-					<!-- <execution> <id>failsafe-verify</id> <phase>verify</phase> <goals> 
-						<goal>verify</goal> </goals> </execution> -->
 				</executions>
 			</plugin>
 
@@ -230,6 +235,11 @@
 							</goals>
 						</execution>
 					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>${maven.plugins.tests}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
