@@ -9,7 +9,7 @@
 		<jta-data-source>java:jboss/datasources/HSQLDB_DS</jta-data-source>
 
 		<properties>
-			<property name="hibernate.hbm2ddl.auto" value="create" />
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 			
 			<!-- propriedades do hibernate -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
