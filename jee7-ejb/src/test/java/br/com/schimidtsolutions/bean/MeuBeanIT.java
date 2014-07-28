@@ -29,9 +29,13 @@ public class MeuBeanIT {
 	@Deployment
 	public static Archive<?> createDeployment() {
 		
+		final String persistenceXml = System.getProperty("persistence.xml");
+		
+		System.out.printf( "persistence.xml selecionado: %s \n", persistenceXml );
+		
 		final WebArchive war = ShrinkWrap.create( WebArchive.class, "test-integrado.war" )
 				.addAsWebInfResource("META-INF/beans.xml", "classes/META-INF/beans.xml")
-				.addAsWebInfResource("META-INF/persistence.xml", "classes/META-INF/persistence.xml")
+				.addAsWebInfResource( persistenceXml, "classes/META-INF/persistence.xml")
 				.addPackages( true, "br.com.schimidtsolutions" )
 				.deleteClasses( MeuBeanUnitTest.class );
 				

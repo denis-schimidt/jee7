@@ -5,14 +5,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
+@Table(schema="DEVELOPMENT", name="CLIENTE")
 public class Cliente {
 	@Id
-	@SequenceGenerator(name="ClienteGenerator", sequenceName="CLIENTE_SEQ", schema="c##sysdev", initialValue=1, allocationSize=Integer.MAX_VALUE)
+	@SequenceGenerator(name="ClienteGenerator", sequenceName="CLIENTE_SEQ", schema="DEVELOPMENT", initialValue=1)
 	@GeneratedValue(generator="ClienteGenerator", strategy=GenerationType.SEQUENCE)
 	@Min(value=1, message="O id não pode ser inferior a 1.")
 	private Integer id;

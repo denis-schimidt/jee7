@@ -43,6 +43,9 @@
 		<!-- Java Maven Settings -->
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+
+		<!-- Mockito Settings -->
+		<mockito-all.version>1.9.5</mockito-all.version>
 	</properties>
 
 	<modules>
@@ -57,14 +60,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>org.jboss.arquillian</groupId>
-				<artifactId>arquillian-bom</artifactId>
-				<version>${arquillian.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-bom</artifactId>
@@ -105,6 +100,13 @@
 				<artifactId>jee7-ejb</artifactId>
 				<version>${project.version}</version>
 				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>${mockito-all.version}</version>
+				<scope>test</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -176,6 +178,7 @@
 					<systemPropertyVariables>
 						<arquillian.launch>${arquillian.launch}</arquillian.launch>
 						<java.util.logging.manager>${java.util.logging.manager}</java.util.logging.manager>
+						<persistence.xml>${persistence.xml}</persistence.xml>
 					</systemPropertyVariables>
 				</configuration>
 				<executions>
@@ -194,16 +197,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.wildfly.plugins</groupId>
-				<artifactId>wildfly-maven-plugin</artifactId>
-				<version>${wildfly-maven-plugin.version}</version>
-				<inherited>true</inherited>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
 			</plugin>
 		</plugins>
 
@@ -241,90 +234,18 @@
 					<artifactId>maven-failsafe-plugin</artifactId>
 					<version>${maven.plugins.tests}</version>
 				</plugin>
+
+				<plugin>
+					<groupId>org.wildfly.plugins</groupId>
+					<artifactId>wildfly-maven-plugin</artifactId>
+					<version>${wildfly-maven-plugin.version}</version>
+					<inherited>true</inherited>
+					<configuration>
+						<skip>true</skip>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>wildfly-embedded</id>
-
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-
-			<properties>
-				<serverProfile>standalone-full.xml</serverProfile>
-				<arquillian.launch>wildfly-embedded</arquillian.launch>
-			</properties>
-
-			<dependencies>
-				<dependency>
-					<groupId>org.wildfly</groupId>
-					<artifactId>wildfly-arquillian-container-embedded</artifactId>
-					<version>${org.wildfly.version}</version>
-					<scope>test</scope>
-				</dependency>
-			</dependencies>
-			<build>
-				<testResources>
-					<testResource>
-						<directory>src/test/resources</directory>
-						<filtering>true</filtering>
-					</testResource>
-				</testResources>
-			</build>
-
-		</profile>
-
-		<profile>
-			<id>wildfly-managed</id>
-
-			<properties>
-				<serverProfile>standalone-full.xml</serverProfile>
-				<arquillian.launch>wildfly-managed</arquillian.launch>
-			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>org.wildfly</groupId>
-					<artifactId>wildfly-arquillian-container-managed</artifactId>
-					<version>${org.wildfly.version}</version>
-					<scope>test</scope>
-				</dependency>
-			</dependencies>
-			<build>
-				<testResources>
-					<testResource>
-						<directory>src/test/resources</directory>
-						<filtering>true</filtering>
-					</testResource>
-				</testResources>
-			</build>
-		</profile>
-
-		<profile>
-			<id>wildfly-remote</id>
-
-			<properties>
-				<serverProfile>standalone-full.xml</serverProfile>
-				<arquillian.launch>wildfly-remote</arquillian.launch>
-			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>org.wildfly</groupId>
-					<artifactId>wildfly-arquillian-container-remote</artifactId>
-					<version>${org.wildfly.version}</version>
-					<scope>test</scope>
-				</dependency>
-			</dependencies>
-			<build>
-				<testResources>
-					<testResource>
-						<directory>src/test/resources</directory>
-						<filtering>true</filtering>
-					</testResource>
-				</testResources>
-			</build>
-		</profile>
-	</profiles>
 </project>
