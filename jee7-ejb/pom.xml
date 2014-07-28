@@ -25,6 +25,7 @@
 	</dependencyManagement>
 
 	<dependencies>
+	
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
@@ -34,7 +35,6 @@
 		<dependency>
 			<groupId>br.com.schimidtsolutions</groupId>
 			<artifactId>jee7-api</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>

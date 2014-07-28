@@ -49,6 +49,7 @@
 	</properties>
 
 	<modules>
+		<module>jee7-api</module>
 		<module>jee7-ejb</module>
 		<module>jee7-web</module>
 		<module>jee7-ear</module>
@@ -100,6 +101,13 @@
 				<artifactId>jee7-ejb</artifactId>
 				<version>${project.version}</version>
 				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>br.com.schimidtsolutions</groupId>
+				<artifactId>jee7-api</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
 			</dependency>
 
 			<dependency>
